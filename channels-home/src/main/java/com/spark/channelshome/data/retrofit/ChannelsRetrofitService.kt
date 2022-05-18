@@ -11,12 +11,13 @@ import retrofit2.http.GET
 import java.io.File
 
 interface ChannelsRetrofitService {
-    @GET("channels.json")
+    @GET("/channels.json")
     suspend fun getAllChannels(): Response<List<IPTVChannel>>
 
     companion object {
         //TODO: Move to DI
-        var retrofitService: ChannelsRetrofitService? = null
+        private var retrofitService: ChannelsRetrofitService? = null
+
         fun getInstance(applicationContext: Context): ChannelsRetrofitService {
             if (retrofitService == null) {
                 val retrofit = Retrofit.Builder()
@@ -34,7 +35,7 @@ interface ChannelsRetrofitService {
                 .cache(
                     Cache(
                         File(applicationContext.cacheDir, "http_cache"),
-                        500L * 1024 * 1024 // 50 MiB
+                        100L * 1024 * 1024 // 100 MB
                     )
                 )
                 .build()

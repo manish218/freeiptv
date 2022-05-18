@@ -4,8 +4,8 @@ import com.spark.channelshome.domain.model.Channel
 import kotlinx.coroutines.flow.StateFlow
 
 interface GetChannelsListUsecase {
-    val channelsList: StateFlow<List<Channel>>
+    val sanitisedChannelsList: StateFlow<Result<List<Channel>>>
 
     // Force refresh channels listing
-    fun refresh()
+    suspend fun refreshChannels(forceRefresh: Boolean)
 }

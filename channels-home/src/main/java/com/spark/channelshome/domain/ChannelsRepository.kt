@@ -1,7 +1,9 @@
 package com.spark.channelshome.domain
 
 import com.spark.channelshome.domain.model.Channel
+import kotlinx.coroutines.flow.StateFlow
 
 interface ChannelsRepository {
-    suspend fun getChannels(): Result<List<Channel>>
+    val channelsFlow: StateFlow<Result<List<Channel>>>
+    suspend fun refreshChannels(forceRefresh: Boolean)
 }

@@ -1,17 +1,33 @@
 package com.spark.channelshome.domain
 
 import com.spark.channelshome.domain.model.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.transform
 
-private class GetChannelListUsecaseImpl() : GetChannelsListUsecase {
-    override val channelsList = MutableStateFlow<List<Channel>>(emptyList())
+private class GetChannelListUsecaseImpl(
+    private val channelsRepository: ChannelsRepository,
+    private val channelDataValidator: ChannelDataValidator
+) : GetChannelsListUsecase {
 
-    init {
-        // fetch channels data from the repository
-    }
+    override val sanitisedChannelsList: StateFlow<Result<List<Channel>>> =
+        channelsRepository.channelsFlow.let { flow ->
+            flow.transform<Result<List<Channel>>, Result<List<Channel>>> { result ->
+                result.fold(
+                    onSuccess = {
+                        Result.success(it.filter { channel ->
+                            channelDataValidator.isValid(
+                                channel
+                            )
+                        })
+                    },
+                    onFailure = {
+                        Result.failure<List<Channel>>(it)
+                    }
+                )
+            } as StateFlow<Result<List<Channel>>>
+        }
 
-    override fun refresh() {
-
+    override suspend fun refreshChannels(forceRefresh: Boolean) {
+        channelsRepository.refreshChannels(forceRefresh)
     }
 }
