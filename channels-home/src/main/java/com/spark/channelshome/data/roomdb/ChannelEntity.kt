@@ -1,12 +1,9 @@
 package com.spark.channelshome.data.roomdb
 
-import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.spark.channelshome.data.model.IPTVChannel
 import com.spark.channelshome.domain.model.Channel
-import com.spark.channelshome.domain.model.Genre
 
 @Entity(tableName = "channelsTable")
 class ChannelEntity(
@@ -17,7 +14,7 @@ class ChannelEntity(
     val broadcastRegion: String?,
     val broadcastCity: String?,
     val languages: List<String>,
-    @Embedded val categories: List<Genre>,
+    @Embedded val categories: List<String>,
     val isAdultChannel: Boolean,
     val websiteUrl: String?,
     val logoUrl: String?
