@@ -3,12 +3,15 @@ package com.spark.channelshome.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.spark.channelshome.domain.GetChannelsListUsecase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ChannelsHomeViewModel(
+@HiltViewModel
+class ChannelsHomeViewModel @Inject constructor(
     private val getChannelsListUsecase: GetChannelsListUsecase
 ) : ViewModel() {
 

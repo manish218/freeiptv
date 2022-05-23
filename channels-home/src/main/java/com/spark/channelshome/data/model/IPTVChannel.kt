@@ -8,7 +8,7 @@ class IPTVChannel(
     val country: String?,
     val subdivision: String?,
     val city: String?,
-    val broadcast_area: String?,
+    val broadcast_area: List<String>,
     val languages: List<String>,
     val categories: List<String>,
     val is_nsfw: Boolean,

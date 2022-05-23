@@ -3,18 +3,19 @@ package com.spark.channelshome.data.roomdb
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
 import com.spark.channelshome.domain.model.Channel
 
 @Entity(tableName = "channelsTable")
-class ChannelEntity(
+data class ChannelEntity(
     @PrimaryKey val channelId: String,
     val title: String,
     val broadcaster: String?,
     val broadcastCountry: String?,
-    val broadcastRegion: String?,
+    val broadcastRegion: List<String>,
     val broadcastCity: String?,
     val languages: List<String>,
-    @Embedded val categories: List<String>,
+    val categories: List<String>,
     val isAdultChannel: Boolean,
     val websiteUrl: String?,
     val logoUrl: String?

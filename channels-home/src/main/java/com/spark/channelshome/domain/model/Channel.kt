@@ -5,7 +5,7 @@ data class Channel(
     val title: String,
     val broadcaster: String? = null,
     val broadcastCountry: String? = null,
-    val broadcastRegion: String? = null,
+    val broadcastRegion: List<String>,
     val broadcastCity: String? = null,
     val languages: List<String>,
     val categories: List<String>,

@@ -11,7 +11,7 @@ import retrofit2.http.GET
 import java.io.File
 
 interface ChannelsRetrofitService {
-    @GET("/channels.json")
+    @GET("channels.json")
     suspend fun getAllChannels(): Response<List<IPTVChannel>>
 
     companion object {
@@ -21,7 +21,7 @@ interface ChannelsRetrofitService {
         fun getInstance(applicationContext: Context): ChannelsRetrofitService {
             if (retrofitService == null) {
                 val retrofit = Retrofit.Builder()
-                    .baseUrl("https://howtodoandroid.com/")
+                    .baseUrl("https://iptv-org.github.io/api/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(getOkHttpClient(applicationContext))
                     .build()

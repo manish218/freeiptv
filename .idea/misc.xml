@@ -4,9 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../layout/compose-model-1652912699371.xml" value="0.32221283783783783" />
+        <entry key="../../../../../layout/compose-model-1653143803186.xml" value="0.3648148148148148" />
+        <entry key="../../../../../layout/compose-model-1653147388294.xml" value="0.32221283783783783" />
+        <entry key="../../../../../layout/compose-model-1653148612494.xml" value="1.0" />
+        <entry key="../../../../../layout/compose-model-1653258289473.xml" value="0.18538851351351351" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.29393115942028986" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2625" />
+        <entry key="channels-home-app/src/main/res/layout/activity_main.xml" value="0.29936594202898553" />
       </map>
     </option>
   </component>

@@ -3,6 +3,15 @@ buildscript {
     dependencies {
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.40")
     }
+
+    ext {
+        // Sdk and tools
+        compileSdkVersion = 31
+        minSdkVersion = 21
+        targetSdkVersion = 31
+
+        roomVersion = '2.4.2'
+    }
 }
 
 plugins {

@@ -7,24 +7,25 @@ import com.spark.channelshome.data.ChannelsDataSourceCached.Companion.DEFAULT_EX
 import com.spark.channelshome.data.roomdb.ChannelDao
 import com.spark.channelshome.data.roomdb.ChannelEntity
 import com.spark.channelshome.domain.model.Channel
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
-class ChannelDataSourceDiskCacheImpl(
-    override val expiryInSec: Int = DEFAULT_EXPIRY_TIME_SEC,
-    override val timeProvider: () -> Date,
+class ChannelDataSourceDiskCacheImpl @Inject constructor(
     override val backingCache: ChannelsDataSource,
     private val channelDao: ChannelDao,
     private val sharedPreferences: SharedPreferences,
 ) : ChannelsDataSourceCached {
 
-    override lateinit var coroutineScope: CoroutineScope
+    override val expiryInSec: Int = DEFAULT_EXPIRY_TIME_SEC
+    override val coroutineScope = CoroutineScope(Job() + Dispatchers.IO)
 
     init {
         coroutineScope.launch {
-            backingCache.channelsFlow.drop(1).collect { result ->
+            refreshChannels()
+            backingCache.channelsFlow.collect { result ->
                 result.fold(
                     onSuccess = { networkChannels ->
                         channelDao.deleteAll()
@@ -56,10 +57,16 @@ class ChannelDataSourceDiskCacheImpl(
         }
     }
 
+    override fun cleanUp() {
+        coroutineScope.cancel()
+    }
+
     private fun setChannelsToInMemCache(channelsList: List<Channel>) {
         channels.clear()
         channels.addAll(channelsList)
     }
+
+    private fun timeProvider() = Calendar.getInstance().time
 
     private fun hasExpired() = timeProvider().time >= cacheExpiryTimeSec
     private val channels = mutableListOf<Channel>()

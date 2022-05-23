@@ -2,6 +2,7 @@ package com.spark.channelshome.data.mapper
 
 import com.spark.channelshome.data.model.IPTVChannel
 import com.spark.channelshome.domain.model.Channel
+import javax.inject.Inject
 
 class IPTVChannelToChannelMapper {
     fun map(iptvChannel: List<IPTVChannel>): List<Channel> {
